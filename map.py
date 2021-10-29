@@ -1,4 +1,3 @@
-from game import GameObject
 from game import GameProp
 import tiles
 
@@ -17,19 +16,17 @@ LAYOUT = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
           [f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f, f]]
 
 
-class Map(GameObject):
+class Map:
 
     def __init__(self, game):
         self.game = game
-        self.tile_list = []
+        self._initiate()
 
-    def update(self):
-        pass
-
-    def draw(self, screen):
+    def _initiate(self):
         for y, row in enumerate(LAYOUT):
             for x, tile in enumerate(row):
                 obj = tiles.get_tile(tile, self.game, x * GameProp.TILE_SIZE, y * GameProp.TILE_SIZE)
                 if obj is None:
                     continue
-                obj.draw(screen)
+                self.game.add_object(obj)
+

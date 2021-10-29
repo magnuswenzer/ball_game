@@ -1,5 +1,4 @@
 import pygame
-from game import GameObject
 import physics
 
 
@@ -7,7 +6,7 @@ IDENTIFIERS = {'s': 'images/tile_bottom.png',
                'f': 'images/tile_fill.png'}
 
 
-class Tile(GameObject):
+class Tile(pygame.sprite.Sprite):
 
     def __init__(self, image_path, game, x, y):
         super().__init__()
@@ -27,7 +26,22 @@ class Tile(GameObject):
         screen.blit(self.image, self.physics.position)
 
 
-def get_tile(identifier, game, x, y):
+class TestTile(pygame.sprite.Sprite):
+    def __init__(self, pos, size):
+        super().__init__()
+        self.image = pygame.Surface((size, size))
+        self.image.fill((150, 150, 150))
+        self.rect = self.image.get_rect(topleft=pos)
+
+    def update(self, x_shift):
+        self.rect.x += x_shift
+
+
+def get_tile(pos, size):
+    return TestTile(pos, size)
+
+
+def old_get_tile(identifier, game, x, y):
     image_path = IDENTIFIERS.get(identifier)
     if not image_path:
         return
